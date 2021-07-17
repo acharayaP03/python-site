@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+This Post Title
+{% endblock %}
+{% block content %}
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'blog/post-detail.css' %}">    
+{% endblock %}
+<section id="summary">
+<h2>Post Title</h2>
+<article>
+<img src="{% static 'images/mountains.jpeg' %}" alt="Post title">
+<address>By Trishten</address>
+<div>
+Last updated on <time>July 10th <time>
+</div>
+</article>
+</section>
+<main>
+<p class="para">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut ipsam temporibus, voluptates odit tempora facere aspernatur iusto. Aliquam voluptatibus quisquam veritatis, alias unde magni molestiae id, voluptatum tempora minima doloremque.</p>
+<p class="para">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti aperiam asperiores vitae. Quo molestiae velit iure vel perferendis voluptates, cumque tenetur eum laborum dolores ipsum, nihil consectetur debitis! Fuga, modi?</p>
+</main>
+{% endblock %}
