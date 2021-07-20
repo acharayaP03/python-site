@@ -1,15 +1,7 @@
 
-from datetime import date
-from django.http.response import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Post
 # Create your views here.
-
-all_posts = [
-]
-
-def get_date(post):
-	return post['date']
 
 def starting_page(request):
     """ 
@@ -25,13 +17,19 @@ def starting_page(request):
     })
 
 def posts(request):
-	return render(request, 'blog/all-posts.html', {
-		"all_posts": all_posts
-	})
+    all_posts = Post.objects.all().order_by("-date")
+    return render(request, 'blog/all-posts.html', {
+        "all_posts": all_posts
+    })
 
 def post_details(request, slug):
-	""" finding related post with slug field. """
-	identified_post = next(post for post in all_posts if post['slug'] == slug)
-	return render(request, 'blog/post-detail.html', {
-		"post": identified_post
-	})
+    """ 
+    finding related post with slug field. 
+    """
+
+    identified_post = get_object_or_404(Post, slug=slug)
+
+    return render(request, 'blog/post-detail.html', {
+        "post": identified_post,
+        "post_tags": identified_post.tags.all()
+    })
