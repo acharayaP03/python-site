@@ -10,6 +10,8 @@ class Author(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+class Tag(models.Model):
+    caption = models.CharField(max_length=20)
 
 class Post(models.Model):
     title = models.CharField(max_length=150)
@@ -20,7 +22,6 @@ class Post(models.Model):
     content = models.TextField(validators=[MinLengthValidator(10)])
     # setting one to many relation with author, also when author is deleted keep posts
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, related_name="posts")
+    # setting many to many relation with tag model
+    tags = models.ManyToManyField(Tag)
 
-
-class Caption(models.Model):
-    pass
