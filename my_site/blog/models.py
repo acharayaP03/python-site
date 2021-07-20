@@ -13,6 +13,9 @@ class Author(models.Model):
 class Tag(models.Model):
     caption = models.CharField(max_length=20)
 
+    def __str__(self):
+        return f"{self.caption}"
+
 class Post(models.Model):
     title = models.CharField(max_length=150)
     excerpt = models.CharField(max_length=200)
@@ -21,7 +24,7 @@ class Post(models.Model):
     slug = models.SlugField(unique=True, db_index=True)
     content = models.TextField(validators=[MinLengthValidator(10)])
     # setting one to many relation with author, also when author is deleted keep posts
-    author = models.ForeignKey(Author, on_delete=models.SET_NULL, related_name="posts")
+    author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True ,related_name="posts")
     # setting many to many relation with tag model
     tags = models.ManyToManyField(Tag)
 
