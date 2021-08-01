@@ -127,6 +127,13 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
+# for images and media files which will then saved to uploads or any other folder that has been defined 
+
+MEDIA_ROOT = BASE_DIR / 'uploads'
+
+# for serving media files, 'MEDIA_URL' will make files path available to access
+MEDIA_URL = '/uploads/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
