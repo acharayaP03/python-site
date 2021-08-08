@@ -2,29 +2,62 @@
 {% load static %}
 
 {% block title %}
-This Post Title
+    This Post Title
 {% endblock %}
 {% block content %}
-{% block css_files %}
-<link rel="stylesheet" href="{% static 'blog/post-detail.css' %}">    
-{% endblock %}
-<section id="summary">
-<h2>{{ post.title}} </h2>
-<div>
-{% for tag in post_tags %}
-<span class="tag">{{ tag.caption}}</span>
-{% endfor %}
-</div>
+    {% block css_files %}
+        <link rel="stylesheet" href="{% static 'blog/post-detail.css' %}">    
+    {% endblock %}
+    <section id="summary">
+            <h2>{{ post.title}} </h2>
+            <div>
+                {% for tag in post_tags %}
+                <span class="tag">{{ tag.caption}}</span>
+                {% endfor %}
+            </div>
 
-<article>
-<img src="{{ post.image.url }}" alt="Post title">
-<address>By <a href="{{post.author.email}}">{{ post.author }}</a></address>
-<div>
-Last updated on <time>{{ post.date}}<time>
-</div>
-</article>
-</section>
-<main>
-{{ post.content|linebreaks}}
-</main>
+            <article>
+                <img src="{{ post.image.url }}" alt="Post title">
+                <address>By <a href="{{post.author.email}}">{{ post.author }}</a></address>
+                <div>
+                    Last updated on <time>{{ post.date}}<time>
+                </div>
+            </article>
+    </section>
+    {% if comment_form.errors %}
+        <div>
+            <h2>Saving your comment has failed</h2>
+            <p>Please check the comment from below the post and fix your errors.</p>
+            <a href="#comment-form">Fix</a>
+        </div>
+    {% endif %}
+    <main>
+        {{ post.content|linebreaks}}
+    </main>
+    <section id="comments">
+        <ul>
+            {% for comment in comments %}
+                <li>
+                    <h2>{{ comment.user_name }}</h2>
+                    <p>{{ comment.text|linebreaks}}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+    <div>
+        <form id="comment-form" action="{% url 'post-detail-page' post.slug %}" method="POST">
+            {% csrf_token %}
+            {% for form_field in comment_form %}
+                <div class="
+                    form-control
+                    {% if form_field.errors %}invalid{% endif %} 
+                ">
+                    {{ form_field.label_tag}}
+                    {{ form_field }}
+                    {{ form_field.errors}}
+                </div>
+            {% endfor %}
+            <button>Comment</button>
+        </form>
+    </div>
 {% endblock %}
