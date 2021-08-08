@@ -28,6 +28,8 @@ class Post(models.Model):
     # setting many to many relation with tag model
     tags = models.ManyToManyField(Tag)
 
+    def __str__(self):
+        return self.title
 
 """
 Comment Model will have one to many relation with Post, hence we will access it 
